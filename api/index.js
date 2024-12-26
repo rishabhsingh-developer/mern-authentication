@@ -14,4 +14,13 @@ mongoose
 
 app.use("/api/auth", authRoute);
 
+app.use((err, req, res, next) => {
+  const statusCode = req.statusCode || 500;
+  const message = req.message;
+  res.json({
+    message,
+    statusCode,
+  });
+});
+
 app.listen(3000, () => console.log("server start listning on port 3000 "));
