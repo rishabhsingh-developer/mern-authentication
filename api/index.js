@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import cors from "cors";
 
 import authRoute from "./routes/auth.routes.js";
 
@@ -11,7 +12,7 @@ mongoose
   )
   .then(() => console.log("mongodb is connected"))
   .catch((err) => console.log(err));
-
+app.use(cors());
 app.use("/api/auth", authRoute);
 
 app.use((err, req, res, next) => {
