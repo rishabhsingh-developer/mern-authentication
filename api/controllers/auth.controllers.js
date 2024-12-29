@@ -29,7 +29,8 @@ export const signin = async (req, res, next) => {
       return next(errorHandler(500, "something is wrong try again"));
     const token = jwt.sign(
       { id: validUser._id },
-      process.env.JWT_SECRET || "rishabh singh"
+      process.env.JWT_SECRET || "rishabh singh",
+      { expiresIn: "1h" }
     );
     const { password: hashedPassword, ...rest } = validUser._doc;
 

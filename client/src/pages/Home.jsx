@@ -1,3 +1,7 @@
+import { useSelector } from "react-redux";
+
 export default function Home() {
-  return <div>Home</div>;
+  const { currentUser } = useSelector((state) => state.user);
+  console.log(currentUser, "currentuser");
+  return <div>{currentUser.username}</div>;
 }
