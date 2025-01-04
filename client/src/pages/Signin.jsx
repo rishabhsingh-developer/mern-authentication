@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Oauth from "../components/Oauth";
 
 import {
   signInStart,
@@ -35,6 +36,7 @@ export default function Signin() {
         return dispatch(signInFailure(data3));
       }
       dispatch(signInSuccess(data3));
+
       navigate("/");
     } catch (error) {
       dispatch(signInFailure(error));
@@ -64,6 +66,7 @@ export default function Signin() {
       >
         {loading ? "Loading..." : "SIGN IN"}
       </button>
+      <Oauth />
       <div className="flex gap-5 w-[500px]">
         <p className="text-lg">Dont Have an account ? </p>
         <Link to="/signup">

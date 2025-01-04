@@ -1,5 +1,9 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 export default function Navbar() {
+  const { currentUser } = useSelector((state) => state.user);
+  console.log(currentUser, "navbar");
+
   return (
     <nav className="flex justify-between items-center bg-gray-300 px-[20px] py-[20px]">
       <Link to="/">
@@ -12,8 +16,16 @@ export default function Navbar() {
         <Link to="/about">
           <li>About</li>
         </Link>
-        <Link to="/signin">
-          <li>Sign-in</li>
+        <Link to={`${currentUser ? "/profile" : "/signin"}`}>
+          {currentUser ? (
+            <img
+              src={currentUser.profilePic}
+              alt="profile"
+              className="h-7 w-7 rounded-full object-cover"
+            />
+          ) : (
+            <li>Sign In</li>
+          )}
         </Link>
       </ul>
     </nav>

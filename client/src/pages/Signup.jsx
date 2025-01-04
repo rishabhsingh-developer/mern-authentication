@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Oauth from "../components/Oauth";
 export default function Signup() {
   const [data, setData] = useState({});
   const [err, setErr] = useState(false);
@@ -27,7 +28,7 @@ export default function Signup() {
       if (data3.statusCode === 500) {
         return setErr(true);
       }
-      navigate("/signin");
+      navigate("/");
     } catch (error) {
       setErr(true);
       console.log(error);
@@ -63,6 +64,7 @@ export default function Signup() {
       >
         {loading ? "Loading..." : "SIGN UP"}
       </button>
+      <Oauth />
       <div className="flex gap-5 w-[500px]">
         <p className="text-lg">Have an account ? </p>
         <Link to="/signin">
