@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 export default function Navbar() {
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser, "navbar");
+  // console.log(currentUser.profilePic, "profilePic");
 
   return (
     <nav className="flex justify-between items-center bg-gray-300 px-[20px] py-[20px]">

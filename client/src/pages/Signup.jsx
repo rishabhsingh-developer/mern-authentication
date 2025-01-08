@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Oauth from "../components/Oauth";
+
 export default function Signup() {
   const [data, setData] = useState({});
   const [err, setErr] = useState(false);
@@ -15,7 +15,7 @@ export default function Signup() {
     try {
       setLoading(true);
       setErr(false);
-      const res = await fetch("http://localhost:3000/api/auth/signup", {
+      const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -64,7 +64,7 @@ export default function Signup() {
       >
         {loading ? "Loading..." : "SIGN UP"}
       </button>
-      <Oauth />
+
       <div className="flex gap-5 w-[500px]">
         <p className="text-lg">Have an account ? </p>
         <Link to="/signin">

@@ -1,80 +1,79 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Oauth from "../components/Oauth";
-
 import {
-  signInStart,
   signInFailure,
+  signInStart,
   signInSuccess,
 } from "../redux/user/userSlice";
-import { useSelector, useDispatch } from "react-redux";
-export default function Signin() {
-  const dispatch = useDispatch();
-  const [data, setData] = useState({});
+import { useDispatch, useSelector } from "react-redux";
+import Oauth from "../components/Oauth";
+
+export default function SignIn() {
+  const [formData, setFormData] = useState({});
+  const { loading, err } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
 
-  function handleChange(e) {
-    setData({ ...data, [e.target.id]: e.target.value });
-  }
-
-  async function handleSignin() {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch("http://localhost:3000/api/auth/signin", {
+      const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
-      const data3 = await res.json();
-
-      if (data3.statusCode === 500) {
-        console.log(data3);
-        return dispatch(signInFailure(data3));
+      const data = await res.json();
+      console.log(data);
+      if (data.success === false) {
+        return dispatch(signInFailure(data));
       }
-      dispatch(signInSuccess(data3));
-
+      dispatch(signInSuccess(data));
       navigate("/");
     } catch (error) {
-      dispatch(signInFailure(error));
+      console.log(error, "error");
     }
-  }
+  };
   return (
-    <div className="flex justify-center items-center flex-col gap-6">
-      <h1 className="text-4xl font-mono font-bold mt-[30px]">Signup</h1>
-
-      <input
-        type="text"
-        placeholder="email"
-        id="email"
-        className="px-2 py-3 w-[500px] bg-gray-100 rounded-xl"
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        placeholder="password"
-        id="password"
-        className="px-2 py-3 w-[500px]  bg-gray-100 rounded-xl"
-        onChange={handleChange}
-      />
-      <button
-        className="py-3 w-[500px] bg-black rounded-xl text-white"
-        onClick={handleSignin}
-      >
-        {loading ? "Loading..." : "SIGN IN"}
-      </button>
-      <Oauth />
-      <div className="flex gap-5 w-[500px]">
-        <p className="text-lg">Dont Have an account ? </p>
+    <div className="p-3 max-w-lg mx-auto">
+      <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <input
+          type="email"
+          placeholder="Email"
+          id="email"
+          className="bg-slate-100 p-3 rounded-lg"
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          id="password"
+          className="bg-slate-100 p-3 rounded-lg"
+          onChange={handleChange}
+        />
+        <button
+          disabled={loading}
+          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+        >
+          {loading ? "Loading..." : "Sign In"}
+        </button>
+        <Oauth />
+      </form>
+      <div className="flex gap-2 mt-5">
+        <p>Dont Have an account?</p>
         <Link to="/signup">
-          <p className="text-blue-500">Sign up</p>
+          <span className="text-blue-500">Sign up</span>
         </Link>
       </div>
-      <p className="text-red-500 font-mono text-lg">
-        {error ? error.message || "SOMETHIG WENT WRONG" : ""}
+      <p className="text-red-700 mt-5">
+        {err ? err.message || "Something went wrong!" : ""}
       </p>
     </div>
   );
