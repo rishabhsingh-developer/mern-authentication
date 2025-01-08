@@ -6,6 +6,7 @@ import userRoute from "./routes/user.routes.js";
 import authRoute from "./routes/auth.routes.js";
 import dotenv from "dotenv";
 dotenv.config();
+const PORT = process.env.PORT || 3000;
 mongoose
   .connect(
     "mongodb+srv://rish:rish@auth-app.os3ro.mongodb.net/auth-app?retryWrites=true&w=majority&appName=auth-app"
@@ -27,4 +28,4 @@ app.use((err, req, res, next) => {
   return res.status(statusCode).json({ success: false, message, statusCode });
 });
 
-app.listen(3000, () => console.log("server start listning on port 3000"));
+app.listen(PORT, () => console.log("server start listning on port 3000"));
