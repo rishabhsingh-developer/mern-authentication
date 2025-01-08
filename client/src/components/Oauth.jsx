@@ -13,7 +13,7 @@ export default function Oauth() {
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
 
-      const res = await fetch("http://localhost:3000/api/auth/google", {
+      const res = await fetch("/api/auth/google", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,6 +25,7 @@ export default function Oauth() {
         }),
       });
       const data = await res.json();
+      console.log(data);
       dispatch(signInSuccess(data));
       navigate("/");
     } catch (err) {
@@ -33,7 +34,7 @@ export default function Oauth() {
   };
   return (
     <button
-      className="bg-red-700  text-white py-3 w-[500px] rounded-lg"
+      className="bg-red-700 sm:w-[500px] w-[300px]  text-white py-3  rounded-lg"
       onClick={handleAuth}
     >
       CONTINUE WITH GOOGLE

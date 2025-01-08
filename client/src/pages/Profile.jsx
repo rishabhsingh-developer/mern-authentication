@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 import { useDispatch } from "react-redux";
-import { signOut } from "../redux/user/userSlice";
+import { deleteUserSuccess, signOut } from "../redux/user/userSlice";
 import { useState } from "react";
 
 export default function Profile() {
@@ -54,7 +54,7 @@ export default function Profile() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
+      dispatch(deleteUserSuccess(data));
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +67,7 @@ export default function Profile() {
       <img
         src={currentUser.profilePic}
         alt="profilepic"
-        className="h-[100px] w-[100px] self-center"
+        className="h-[100px] w-[100px] self-center rounded-[50%]"
       />
       <input
         defaultValue={currentUser.username}
@@ -108,6 +108,7 @@ export default function Profile() {
         </span>
       </div>
       <p className="text-red-700 mt-5">{error && "Something went wrong!"}</p>
+      <p></p>
     </div>
   );
 }

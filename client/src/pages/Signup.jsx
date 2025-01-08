@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Oauth from "../components/Oauth";
 
 export default function Signup() {
   const [data, setData] = useState({});
@@ -41,31 +42,34 @@ export default function Signup() {
         type="text"
         id="username"
         placeholder="username"
-        className="px-2 py-3 w-[500px]  bg-gray-100 rounded-xl"
+        className="px-2 py-3 sm:w-[500px] w-[300px] bg-gray-100 rounded-xl"
         onChange={handleChange}
       />
       <input
         type="text"
         placeholder="email"
         id="email"
-        className="px-2 py-3 w-[500px] bg-gray-100 rounded-xl"
+        className="px-2 py-3 sm:w-[500px] w-[300px] bg-gray-100 rounded-xl"
         onChange={handleChange}
       />
       <input
         type="text"
         placeholder="password"
         id="password"
-        className="px-2 py-3 w-[500px]  bg-gray-100 rounded-xl"
+        className="px-2 py-3 sm:w-[500px] w-[300px] bg-gray-100 rounded-xl"
         onChange={handleChange}
       />
       <button
-        className="py-3 w-[500px] bg-black rounded-xl text-white"
+        className="py-3 sm:w-[500px] w-[300px] bg-black rounded-xl text-white"
         onClick={handleSignup}
       >
         {loading ? "Loading..." : "SIGN UP"}
       </button>
+      <div className="sm:w-[500px] w-[300px] border border-black">
+        <Oauth />
+      </div>
 
-      <div className="flex gap-5 w-[500px]">
+      <div className="flex gap-5 sm:w-[500px] w-[300px]">
         <p className="text-lg">Have an account ? </p>
         <Link to="/signin">
           <p className="text-blue-500">Sign in</p>
