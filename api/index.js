@@ -9,9 +9,7 @@ dotenv.config();
 const PORT = 3000;
 import path from "path";
 mongoose
-  .connect(
-    "mongodb+srv://rish:rish@auth-app.os3ro.mongodb.net/auth-app?retryWrites=true&w=majority&appName=auth-app"
-  )
+  .connect(process.env.MONGO)
   .then(() => console.log("mongodb is connected"))
   .catch((err) => console.log(err));
 
