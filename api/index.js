@@ -6,7 +6,8 @@ import userRoute from "./routes/user.routes.js";
 import authRoute from "./routes/auth.routes.js";
 import dotenv from "dotenv";
 dotenv.config();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
+import path from "path";
 mongoose
   .connect(
     "mongodb+srv://rish:rish@auth-app.os3ro.mongodb.net/auth-app?retryWrites=true&w=majority&appName=auth-app"
@@ -14,7 +15,13 @@ mongoose
   .then(() => console.log("mongodb is connected"))
   .catch((err) => console.log(err));
 
+const __dirname = path.resolve();
 const app = express();
+
+app.use(express.static(path.join(__dirname, "./client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 app.use(cookieParser());
 app.use(express.json());
 
