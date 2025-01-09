@@ -43,7 +43,7 @@ export default function SignIn() {
   return (
     <div className="p-3 flex justify-center items-center flex-col gap-6">
       <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <div className="flex flex-col gap-5">
         <input
           type="email"
           placeholder="Email"
@@ -60,12 +60,14 @@ export default function SignIn() {
         />
         <button
           disabled={loading}
+          onClick={handleSubmit}
           className="bg-slate-700 sm:w-[500px] w-[300px] text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
         >
           {loading ? "Loading..." : "Sign In"}
         </button>
         <Oauth />
-      </form>
+      </div>
+
       <div className="flex gap-2 mt-5">
         <p>Dont Have an account?</p>
         <Link to="/signup">
